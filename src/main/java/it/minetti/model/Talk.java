@@ -26,11 +26,14 @@ public class Talk implements Serializable {
   @OneToMany(mappedBy = "talk", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Talker> talkers = new ArrayList<>();
 
+  private Talk() {}
+
   public Talk(String name) {
     this.name = name;
   }
 
   public void addTalker(Talker talker) {
+    talker.setTalk(this);
     this.talkers.add(talker);
   }
 

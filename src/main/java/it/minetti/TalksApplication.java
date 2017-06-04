@@ -9,4 +9,5 @@ public class TalksApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TalksApplication.class, args);
 	}
+
 }

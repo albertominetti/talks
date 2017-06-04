@@ -4,6 +4,7 @@ import it.minetti.TalkRepository;
 import it.minetti.controller.model.CreateTalkRequest;
 import it.minetti.controller.model.RestTalk;
 import it.minetti.controller.model.RestTalker;
+import it.minetti.controller.model.TalkNotFoundException;
 import it.minetti.model.Talk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-public class RestGetController {
+public class RestTalkController {
   private static final Logger logger = LoggerFactory.getLogger(RestController.class);
 
   @Autowired
@@ -36,15 +37,20 @@ public class RestGetController {
   @ResponseBody
   public RestTalk talk(@PathVariable("name") String name) {
     logger.info("/talk required for name {}", name);
-    return new RestTalk(talkRepository.findByName(name));
+    Talk talk = talkRepository.findByName(name);
+    if (talk == null) throw new TalkNotFoundException();
+    return new RestTalk(talk);
   }
 
-  @RequestMapping(value = "/talk/{name}/talkers", method = RequestMethod.GET)
+  @RequestMapping(value = "/talk/{name}", method = RequestMethod.PUT)
   @ResponseBody
-  public List<RestTalker> talkers(@PathVariable("name") String name) {
-    logger.info("/talkers required for name {}", name);
-    Talk talk = talkRepository.findByName(name);
-    return talk.getTalkers().stream().map(RestTalker::new).collect(Collectors.toList());
+  public RestTalk create(@PathVariable String name) {
+    logger.info("/talk create for name {}", name);
+
+    Talk talk = new Talk(name);
+    Talk stored = talkRepository.save(talk);
+
+    return new RestTalk(stored);
   }
 
 }

@@ -10,8 +10,8 @@ public class Talker {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
-  @ManyToOne
-  @JoinColumn(name = "id_talk", insertable = false, updatable = false)
+  @ManyToOne(optional=false)
+  @JoinColumn(name = "id_talk")
   private Talk talk;
 
   @NotNull
@@ -23,6 +23,9 @@ public class Talker {
 
   @Column
   private boolean absent = false;
+
+
+  private Talker() {}
 
   public Talker(String name) {
     this.name = name;
@@ -54,6 +57,14 @@ public class Talker {
 
   public void setAbsent(boolean absent) {
     this.absent = absent;
+  }
+
+  public Talk getTalk() {
+    return talk;
+  }
+
+  public void setTalk(Talk talk) {
+    this.talk = talk;
   }
 
   @Override
