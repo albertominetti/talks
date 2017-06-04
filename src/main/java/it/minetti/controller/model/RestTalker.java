@@ -1,6 +1,6 @@
 package it.minetti.controller.model;
 
-import it.minetti.model.Talker;
+import it.minetti.persistence.model.Talker;
 
 public class RestTalker {
   private final String name;

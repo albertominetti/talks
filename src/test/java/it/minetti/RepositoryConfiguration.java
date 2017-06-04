@@ -38,7 +38,7 @@ public class RepositoryConfiguration {
     // realDb
     //emf.setDataSource(realDb());
 
-    emf.setPackagesToScan("it.minetti.model");
+    emf.setPackagesToScan("it.minetti.persistence.model");
     emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
     Properties properties = new Properties();

@@ -1,6 +1,6 @@
 package it.minetti.controller.model;
 
-import it.minetti.model.Talk;
+import it.minetti.persistence.model.Talk;
 
 public class RestTalk {
 

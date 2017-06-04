@@ -1,16 +1,13 @@
 package it.minetti.controller;
 
-import it.minetti.TalkRepository;
-import it.minetti.controller.model.CreateTalkRequest;
+import it.minetti.logic.TalksService;
+import it.minetti.persistence.TalkRepository;
 import it.minetti.controller.model.RestTalk;
-import it.minetti.controller.model.RestTalker;
 import it.minetti.controller.model.TalkNotFoundException;
-import it.minetti.model.Talk;
+import it.minetti.persistence.model.Talk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +17,17 @@ import java.util.stream.Collectors;
 
 @Controller
 public class RestTalkController {
-  private static final Logger logger = LoggerFactory.getLogger(RestController.class);
+  private static final Logger logger = LoggerFactory.getLogger(RestTalkController.class);
 
   @Autowired
-  private TalkRepository talkRepository;
+  private TalksService talksService;
 
   @RequestMapping(value = "/talks", method = RequestMethod.GET)
   @ResponseBody
   public Set<String> list() {
     logger.info("/talks required");
-    List<Talk> all = talkRepository.findAll();
+
+    List<Talk> all = talksService.allTalks();
     return all.stream().map(Talk::getName).collect(Collectors.toSet());
   }
 
@@ -37,8 +35,7 @@ public class RestTalkController {
   @ResponseBody
   public RestTalk talk(@PathVariable("name") String name) {
     logger.info("/talk required for name {}", name);
-    Talk talk = talkRepository.findByName(name);
-    if (talk == null) throw new TalkNotFoundException();
+    Talk talk = talksService.getTalk(name);
     return new RestTalk(talk);
   }
 
@@ -46,11 +43,8 @@ public class RestTalkController {
   @ResponseBody
   public RestTalk create(@PathVariable String name) {
     logger.info("/talk create for name {}", name);
-
-    Talk talk = new Talk(name);
-    Talk stored = talkRepository.save(talk);
-
-    return new RestTalk(stored);
+    Talk talk = talksService.newTalk(name);
+    return new RestTalk(talk);
   }
 
 }
