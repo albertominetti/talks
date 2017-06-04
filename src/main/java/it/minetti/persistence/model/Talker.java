@@ -1,4 +1,4 @@
-package it.minetti.model;
+package it.minetti.persistence.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

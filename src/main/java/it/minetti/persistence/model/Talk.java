@@ -1,7 +1,4 @@
-package it.minetti.model;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+package it.minetti.persistence.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
