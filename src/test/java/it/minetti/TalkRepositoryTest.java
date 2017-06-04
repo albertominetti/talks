@@ -1,7 +1,8 @@
 package it.minetti;
 
-import it.minetti.model.Talk;
-import it.minetti.model.Talker;
+import it.minetti.persistence.TalkRepository;
+import it.minetti.persistence.model.Talk;
+import it.minetti.persistence.model.Talker;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
