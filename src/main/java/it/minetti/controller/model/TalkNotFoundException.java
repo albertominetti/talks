@@ -1,6 +1,8 @@
 package it.minetti.controller.model;
 
-public class TalkNotFoundException extends RuntimeException {
+import javax.persistence.EntityNotFoundException;
+
+public class TalkNotFoundException extends EntityNotFoundException {
   public TalkNotFoundException(){
     super("Talk not found");
   }
