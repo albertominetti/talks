@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/api")
 public class RestEventController {
   private static final Logger logger = LoggerFactory.getLogger(RestEventController.class);
 

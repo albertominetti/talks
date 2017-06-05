@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/api")
 public class RestTalkController {
   private static final Logger logger = LoggerFactory.getLogger(RestTalkController.class);
 
