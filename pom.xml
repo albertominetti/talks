@@ -49,6 +49,19 @@
 			<version>${spring-fox.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- just for object models -->
+		<dependency>
+			<groupId>org.telegram</groupId>
+			<artifactId>telegrambots</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
 		<!-- mysql database -->
 		<!--
 		<dependency>
