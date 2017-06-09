@@ -1,5 +1,6 @@
 package it.minetti.controller.model;
 
+import it.minetti.logic.TalkerRequest;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;

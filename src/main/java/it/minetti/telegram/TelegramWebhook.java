@@ -3,6 +3,8 @@ package it.minetti.telegram;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +17,15 @@ public class TelegramWebhook {
   private static final Logger logger = LoggerFactory.getLogger(TelegramWebhook.class);
 
   @Autowired
-  private TelegramBot telegramBot;
+  private TelegramHandler telegramHandler;
 
 
   @RequestMapping(value = "/", method = RequestMethod.POST)
-  public void webhook(@RequestBody Update update) {
+  public ResponseEntity webhook(@RequestBody Update update) {
     logger.info("Update {} an update just arrived", update.getUpdateId());
-    telegramBot.handleUpdate(update);
+    telegramHandler.handleUpdate(update);
     logger.info("Update {} has been processed", update.getUpdateId());
+    return new ResponseEntity(HttpStatus.OK);
   }
 
 

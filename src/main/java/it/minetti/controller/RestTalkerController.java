@@ -3,6 +3,7 @@ package it.minetti.controller;
 import io.swagger.annotations.ApiOperation;
 import it.minetti.controller.model.RestTalker;
 import it.minetti.controller.model.RestTalkerRequest;
+import it.minetti.logic.TalkerRequest;
 import it.minetti.logic.TalksService;
 import it.minetti.persistence.model.Talker;
 import org.slf4j.Logger;
@@ -35,9 +36,9 @@ public class RestTalkerController {
   @RequestMapping(value = "/talk/{name}/talker", method = RequestMethod.POST)
   @ResponseBody
   public RestTalker create(@PathVariable String name, @RequestBody RestTalkerRequest requestTalker) {
-    logger.info("/talker add for talk {} and talker {} ", name, requestTalker);
+    logger.info("/talker addTalker for talk {} and talker {} ", name, requestTalker);
 
-    Talker talker = talksService.addTalker(name, requestTalker);
+    Talker talker = talksService.addTalker(name, new TalkerRequest(requestTalker.getName()));
 
     return new RestTalker(talker);
   }
@@ -47,7 +48,7 @@ public class RestTalkerController {
   public RestTalker markAbsent(@PathVariable String name, @RequestBody RestTalkerRequest requestTalker) {
     logger.info("/talker absent for talk {} and talker {} ", name, requestTalker);
 
-    Talker talker = talksService.setAbsentTalker(name, requestTalker);
+    Talker talker = talksService.setAbsentTalker(name, new TalkerRequest(requestTalker.getName()));
 
     return new RestTalker(talker);
   }

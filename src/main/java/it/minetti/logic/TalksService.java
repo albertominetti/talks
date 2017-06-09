@@ -1,6 +1,5 @@
 package it.minetti.logic;
 
-import it.minetti.controller.model.RestTalkerRequest;
 import it.minetti.controller.model.TalkNotFoundException;
 import it.minetti.controller.model.TalkerNotFoundException;
 import it.minetti.persistence.EventRepository;
@@ -11,7 +10,6 @@ import it.minetti.persistence.model.Talker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +34,7 @@ public class TalksService {
     return talk.getTalkers();
   }
 
-  public Talker addTalker(String talkName, RestTalkerRequest requestTalker) {
+  public Talker addTalker(String talkName, TalkerRequest requestTalker) {
     Talk talk = talkRepository.findByName(talkName);
     if (talk == null) throw new TalkNotFoundException();
 
@@ -45,7 +43,7 @@ public class TalksService {
     return talker;
   }
 
-  public Talker setAbsentTalker(String talkName, RestTalkerRequest requestTalker) {
+  public Talker setAbsentTalker(String talkName, TalkerRequest requestTalker) {
     Talk talk = talkRepository.findByName(talkName);
     if (talk == null) throw new TalkNotFoundException();
     Talker talker = talk.getTalkers().stream().filter(t -> t.getName().equals(requestTalker.getName()))
@@ -78,6 +76,23 @@ public class TalksService {
     if (talk == null) throw new TalkNotFoundException();
     return talk;
   }
+
+  public Talk getTalk(long id) {
+    Talk talk = talkRepository.findOne(id);
+    if (talk == null) throw new TalkNotFoundException();
+    return talk;
+  }
+
+  public boolean existsTalk(String name) {
+    Talk talk = talkRepository.findByName(name);
+    return talk != null;
+  }
+
+  public boolean existsTalk(long id) {
+    Talk talk = talkRepository.findOne(id);
+    return talk != null;
+  }
+
 
   public Talk newTalk(String name) {
     Talk talk = new Talk(name);

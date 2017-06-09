@@ -54,7 +54,7 @@ public class TalksServiceTest {
     t.addTalker(new Talker("Alberto"));
     when(talkRepository.findByName(TALK_NAME)).thenReturn(t);
 
-    talksService.setAbsentTalker(TALK_NAME, new RestTalkerRequest(){{this.setName("Alberto");}});
+    talksService.setAbsentTalker(TALK_NAME, new TalkerRequest("Alberto"));
     verify(talkRepository).findByName(TALK_NAME);
     verify(eventRepository).save(any(Event.class));
   }
