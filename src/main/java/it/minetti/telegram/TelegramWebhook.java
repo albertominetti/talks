@@ -22,9 +22,14 @@ public class TelegramWebhook {
 
   @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity webhook(@RequestBody Update update) {
-    logger.info("Update {} an update just arrived", update.getUpdateId());
-    telegramHandler.handleUpdate(update);
-    logger.info("Update {} has been processed", update.getUpdateId());
+    logger.info("Update {} just arrived...", update);
+    try {
+      telegramHandler.handleUpdate(update);
+      logger.info("Update {} has been processed.", update.getUpdateId());
+    } catch (Exception ee) {
+      logger.error("Error during processing {}, exception is {}", update.getUpdateId(), ee.getMessage());
+    }
+    // always return 200 to avoid telegram to resend the update
     return new ResponseEntity(HttpStatus.OK);
   }
 

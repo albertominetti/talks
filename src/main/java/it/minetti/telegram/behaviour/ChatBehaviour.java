@@ -10,10 +10,8 @@ import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 
-import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Arrays.*;
+import java.util.stream.Collectors;
 
 public abstract class ChatBehaviour {
 
@@ -46,11 +44,15 @@ public abstract class ChatBehaviour {
   }
 
   public SendMessage absent() {
+    if (getPresentTalkers().size() == 0) return new SendMessage(session.getChatId(), "No talker is present");
+
     session.setStatus(Session.CHOOSE_ABSENT);
     return null;
   }
 
   public SendMessage random() {
+    if (getPresentTalkers().size() == 0) return new SendMessage(session.getChatId(), "No talker is present");
+
     Talk talk = talksService.getTalk(session.getTalkId());
     Talker random = talksService.getRandom(talk.getName());
     return new SendMessage(session.getChatId(), "Here is a random presenter " + random.getName());
@@ -125,6 +127,12 @@ public abstract class ChatBehaviour {
     chatBehaviour.setTalksService(talksService);
 
     return chatBehaviour;
+  }
+
+  protected List<Talker> getPresentTalkers() {
+    Talk talk = talksService.getTalk(session.getTalkId());
+    return talk.getTalkers().stream()
+      .filter(t -> !t.isAbsent()).collect(Collectors.toList());
   }
 
   public abstract short getOwnStatus();

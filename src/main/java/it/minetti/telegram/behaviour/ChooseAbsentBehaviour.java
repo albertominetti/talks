@@ -12,7 +12,6 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChooseAbsentBehaviour extends ChatBehaviour {
 
@@ -39,9 +38,7 @@ public class ChooseAbsentBehaviour extends ChatBehaviour {
     SendMessage sendMessage = new SendMessage(session.getChatId(), "Write down the absent talker name");
     ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup();
 
-    Talk talk = talksService.getTalk(session.getTalkId());
-    List<Talker> presentTalkers = talk.getTalkers().stream()
-      .filter(t -> !t.isAbsent()).collect(Collectors.toList());
+    List<Talker> presentTalkers = getPresentTalkers();
 
     List<KeyboardRow> keyboard = new ArrayList<>();
 
@@ -52,7 +49,7 @@ public class ChooseAbsentBehaviour extends ChatBehaviour {
       Talker talker = presentTalkers.get(i);
       row.add(talker.getName());
       i++;
-      if (i> 0 && i % 3 == 0) {
+      if (i > 0 && i % 3 == 0) {
         row = new KeyboardRow();
         keyboard.add(row);
       }
