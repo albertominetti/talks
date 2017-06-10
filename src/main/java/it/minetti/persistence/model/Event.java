@@ -64,7 +64,6 @@ public class Event {
     this.description = description;
   }
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
   public LocalDateTime getDate() {
     return date;
   }
