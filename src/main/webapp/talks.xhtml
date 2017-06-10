@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:h="http://java.sun.com/jsf/html"
+			xmlns:f="http://java.sun.com/jsf/core"
+			xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+	<h:head/>
+	<h:body>
+		<p:panel styleClass="ui-fluid">
+			<h1>Talks application</h1>
+			<p>Here you can create a new talk, add talkers, mark absents and get a random presenter</p>
+			<p:panel id="infoContainer" header="Current Talk status" titletip="">
+				<p:panelGrid id="info" columns="6" layout="grid" styleClass="ui-panelgrid-blank"
+										 columnClasses="ui-grid-col-2,ui-grid-col-2">
+					<p:outputLabel for="currentTalk" value="Talk:" style="font-weight:bold"/>
+					<p:outputLabel id="currentTalk" value="#{viewTalk.selectedTalkName}"/>
+
+					<p:outputLabel for="currentCount" value="Participants:" style="font-weight:bold"/>
+					<p:outputLabel id="currentCount" value="#{viewTalk.count}"/>
+
+
+					<p:outputLabel for="currentPresenter" value="Presenter:" style="font-weight:bold"/>
+					<p:outputLabel id="currentPresenter" value="#{viewTalk.randomTalker}"/>
+
+				</p:panelGrid>
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+
+			</p:panel>
+			<p:sticky target="infoContainer"/>
+
+			<p:accordionPanel id="tabs">
+				<p:tab id="newTab" title="New Talk" titletip="Create a new Talk">
+					<h:form id="newForm"><p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
+																						columnClasses="ui-grid-col-1,ui-grid-col-8,ui-grid-col-3">
+						<p:outputLabel for="newTalkName" value="Talk"/>
+						<p:inputText id="newTalkName" value="#{viewTalk.newTalkName}"
+												 required="true" requiredMessage="Talk name is required"/>
+						<p:commandButton id="newCommand" value="Create" update="info tabs:selectForm
+						                  																			tabs:addTalkerForm
+						                  																			tabs:randomForm
+						                  																			tabs:markAbsentForm"
+														 action="#{viewTalk.createNewTalk()}"/>
+					</p:panelGrid></h:form>
+				</p:tab>
+
+				<p:tab id="selectTab" title="Choose Talk" titletip="Choose an existent Talk">
+					<h:form id="selectForm"><p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+																							 columnClasses="ui-grid-col-1,ui-grid-col-11">
+						<p:outputLabel for="selectTalk" value="Talk"/>
+						<p:selectOneMenu id="selectTalk" value="#{viewTalk.selectedTalkName}"
+														 disabled="#{empty viewTalk.availableTalks}">
+							<f:selectItem itemLabel="Select" itemValue=""/>
+							<f:selectItems value="#{viewTalk.availableTalks}"/>
+							<p:ajax update="info tabs:randomForm tabs:addTalkerForm"/>
+						</p:selectOneMenu>
+					</p:panelGrid></h:form>
+				</p:tab>
+
+
+				<p:tab id="addTalkerTab" title="Add Talker" titletip="Add a new Talker">
+					<h:form id="addTalkerForm"><p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
+																									columnClasses="ui-grid-col-1,ui-grid-col-8,ui-grid-col-3">
+						<p:outputLabel for="newTalkerName" value="Talker"/>
+						<p:inputText id="newTalkerName" value="#{viewTalk.newTalkerName}"
+												 required="true" requiredMessage="Talker name is required"/>
+						<p:commandButton value="Add" update="info tabs:randomForm tabs:markAbsentForm"
+														 action="#{viewTalk.addTalker()}"/>
+					</p:panelGrid></h:form>
+				</p:tab>
+
+
+				<p:tab id="markAbsentTab" title="Mark absent" titletip="Choose an absent Talker">
+					<h:form id="markAbsentForm"><p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
+																									 columnClasses="ui-grid-col-1,ui-grid-col-8,ui-grid-col-3">
+
+						<p:outputLabel for="absentTalker" value="Talker"/>
+						<p:selectOneMenu id="absentTalker" value="#{viewTalk.absentTalkerName}"
+														 disabled="#{empty viewTalk.allTalks or empty viewTalk.presentTalkers}">
+							<f:selectItem itemLabel="Select" itemValue=""/>
+							<f:selectItems value="#{viewTalk.presentTalkers}" var="t"
+														 itemLabel="#{t.name}" itemValue="#{t.name}"/>
+							<p:ajax update="commandAbsent"/>
+						</p:selectOneMenu>
+						<p:commandButton id="commandAbsent" value="Absent" update="tabs:randomForm"
+														 action="#{viewTalk.absentTalker()}"
+														 disabled="#{empty viewTalk.absentTalkerName}"/>
+
+					</p:panelGrid></h:form>
+				</p:tab>
+
+
+				<p:tab id="randomTab" title="Choose Presenter" titletip="Choose an absent Talker">
+					<h:form id="randomForm">
+						<p:commandButton value="Random" update="info" action="#{viewTalk.random()}"
+														 disabled="#{empty viewTalk.selectedTalkName}"/>
+					</h:form>
+				</p:tab>
+			</p:accordionPanel>
+
+
+		</p:panel>
+
+
+	</h:body>
+</f:view>
+</html>
