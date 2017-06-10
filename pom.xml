@@ -25,6 +25,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-fox.version>2.4.0</spring-fox.version>
+		<jsf-version>2.2.13</jsf-version>
 	</properties>
 
 	<dependencies>
@@ -55,8 +56,48 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- just for object models -->
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsf-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.8</version>
+		</dependency>
+
+		<dependency>
+			<!-- just for object models -->
 			<groupId>org.telegram</groupId>
 			<artifactId>telegrambots</artifactId>
 			<version>3.0.1</version>
