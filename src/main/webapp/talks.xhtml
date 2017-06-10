@@ -3,11 +3,13 @@
 			xmlns:f="http://java.sun.com/jsf/core"
 			xmlns:p="http://primefaces.org/ui">
 <f:view contentType="text/html">
-	<h:head/>
+	<h:head>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	</h:head>
 	<h:body>
 		<p:panel styleClass="ui-fluid">
 			<h1>Talks application</h1>
-			<p>Here you can create a new talk, add talkers, mark absents and get a random presenter</p>
+
 			<p:panel id="infoContainer" header="Current Talk status" titletip="">
 				<p:panelGrid id="info" columns="6" layout="grid" styleClass="ui-panelgrid-blank"
 										 columnClasses="ui-grid-col-2,ui-grid-col-2">
@@ -27,7 +29,22 @@
 			</p:panel>
 			<p:sticky target="infoContainer"/>
 
-			<p:accordionPanel id="tabs">
+			<p>
+				Above you can see the current status of the choosen talk,
+				the number of participants and the choosen presenter.
+				With the following options you can
+				<p:link value="create a new talk"/>,
+				<p:link value="choose an existent talk"/>,
+				<p:link value="add talkers"/>,
+				<p:link value="mark absents"/> and
+				<p:link value="get a random presenter"/>.
+			</p>
+			<p>
+				You can also use the Telegram bot:
+				<h:outputLink value="https://telegram.me/ApiTalksBot">@ApiTalksBot</h:outputLink>
+			</p>
+
+			<p:accordionPanel id="tabs" activeIndex="-1">
 				<p:tab id="newTab" title="New Talk" titletip="Create a new Talk">
 					<h:form id="newForm"><p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
 																						columnClasses="ui-grid-col-1,ui-grid-col-8,ui-grid-col-3">
@@ -63,6 +80,7 @@
 						<p:inputText id="newTalkerName" value="#{viewTalk.newTalkerName}"
 												 required="true" requiredMessage="Talker name is required"/>
 						<p:commandButton value="Add" update="info tabs:randomForm tabs:markAbsentForm"
+														 disabled="#{empty viewTalk.newTalkName or empty viewTalk.selectedTalkName}"
 														 action="#{viewTalk.addTalker()}"/>
 					</p:panelGrid></h:form>
 				</p:tab>
