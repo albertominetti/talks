@@ -20,7 +20,7 @@ public class TelegramWebhook {
   private TelegramHandler telegramHandler;
 
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity webhook(@RequestBody Update update) {
     logger.info("Update {} an update just arrived", update.getUpdateId());
     telegramHandler.handleUpdate(update);
