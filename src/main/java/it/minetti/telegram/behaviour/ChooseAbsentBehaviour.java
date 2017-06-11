@@ -36,7 +36,7 @@ public class ChooseAbsentBehaviour extends ChatBehaviour {
   @Override
   public BotApiMethod<Message> getInitMessage() {
     SendMessage sendMessage = new SendMessage(session.getChatId(), "Write down the absent talker name");
-    ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup();
+    ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup().setResizeKeyboard(true).setOneTimeKeyboard(true);
 
     List<Talker> presentTalkers = getPresentTalkers();
 

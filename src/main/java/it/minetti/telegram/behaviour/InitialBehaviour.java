@@ -22,7 +22,7 @@ public class InitialBehaviour extends NoTalkSelectedBehaviour {
   @Override
   public BotApiMethod<Message> getInitMessage() {
     SendMessage sendMessage = new SendMessage(session.getChatId(), "Do you want to /createTalk or /selectTalk ?");
-    ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup();
+    ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup().setResizeKeyboard(true).setOneTimeKeyboard(true);
     List<KeyboardRow> keyboard = new ArrayList<>();
     KeyboardRow keyboardRow1 = new KeyboardRow();
     keyboardRow1.add("/createTalk");

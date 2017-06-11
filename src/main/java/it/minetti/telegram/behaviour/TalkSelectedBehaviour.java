@@ -21,7 +21,8 @@ public class TalkSelectedBehaviour extends ChatBehaviour {
 
   @Override
   public BotApiMethod<Message> getInitMessage() {
-    SendMessage sendMessage = new SendMessage(session.getChatId(), "You can /markAbsent /addTalker /random /list");    ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup();
+    SendMessage sendMessage = new SendMessage(session.getChatId(), "You can /markAbsent /addTalker /random /list");
+    ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup().setResizeKeyboard(true).setOneTimeKeyboard(true);
     List<KeyboardRow> keyboard = new ArrayList<>();
     KeyboardRow keyboardRow1 = new KeyboardRow();
     keyboardRow1.add("/addTalker");
