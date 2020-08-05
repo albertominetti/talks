@@ -1,3 +1,7 @@
+> :warning: **outdated software**: this small project has been done before start to work seriously with Java, it was more than 8 years ago.
+
+> :skull: **run away if you look for good development practices**
+
 # talks
 
 L'applicazione è scritta in Java e basata su framework Spring, dipende da spring-boot così da poter essere lanciarla direttamente da Maven usando il goal spring-boot:run (o con il jar generato) ed è indipendente da app-container esterni; segue lo standard docker S2I utilizzato da diverse piattaforme PaaS tra cui OpenShift di RedHat o Amazon AWS. OpenShift è stata mia prima opzione di hosting ma le limitazioni dell'utenza free mi hanno imposto di cercare altrove, quindi ho optato per Heroku di cui ho apprezzato il supporto SSL, necessario per il modulo 4 (vedi sotto).
